@@ -1,13 +1,14 @@
-import '@/styles/bootstrap.min.css'
-import Script from 'next/script'
-
-
+import '@/styles/globals.css'
+import NavbarComponent from './components/NavbarComponent'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App({ Component, pageProps }) {
   return (
-  <>
-    <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"/>
-    <Component {...pageProps} />
-  </>
+      <>
+        <NavbarComponent></NavbarComponent>
+        <Component {...pageProps} />
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        
+      </>
   )
 }
