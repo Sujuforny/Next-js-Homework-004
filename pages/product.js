@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import { Image } from 'react-bootstrap';
 export default function product() {
     const[data,setData] = useState([]);
+    const [data1,setData1] =useState("");
+    const [filterData,setFilterData] = useState([]);
     useEffect(()=>{
-        fetch("https://fakestoreapi.com/products").then(e=>e.json()).then(a=>setData(a));
-    },[])
-    function handleClick(event){
-        const newData = data.filter(row=>{
-            return row.title.toLowerCase().includes(event.target.value.toLowerCase())
-        })
-        setRecords(newData);
-    };
-    const [records,setRecords] =useState(data);
+        fetch("https://fakestoreapi.com/products").then(e=>e.json()).then(a=>
+        {
+            setData(a);
+            setFilterData(a);
+        });
+    },[]);
 
-    const ImageCell = ({data}) => <img src={data.image} width="50" height="50" thumbnail />;
+    const search = (e)=>{
+        return e.filter((data2)=>data2.title.toLowerCase().includes(data1.toLowerCase()));
+    }
     const columns =[
         {
             name: 'ID',
@@ -41,13 +42,20 @@ export default function product() {
     ];
     return (
     <div className='container h-50'>
-      <input class="form-control me-2 w-25 float-end" type='text' onChange={handleClick} ></input>
       <DataTable
             columns={columns}
-            data={data}
+            data={search(data)}
             fixedHeader
             pagination
 		    dense
+            highlightOnHover
+            subHeader
+            subHeaderComponent={
+                <form class="d-flex float-end" role="search">
+                    <input class="form-control me-2 float-end" type='text' onChange={(e)=>setData1(e.target.value)} ></input>
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            }
         />
     </div>
   )
